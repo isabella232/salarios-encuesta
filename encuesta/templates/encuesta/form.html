@@ -1,0 +1,159 @@
+{% extends "encuesta/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="content">
+    <h1>{% trans "Encuesta de salarios" %}</h1>
+    <p class="lead">
+    {% blocktrans %}Tus respuestas son anónimas. Agradecemos que contestes con honestidad para generar 
+    estadísticas veraces que sirvan a todos. 
+    {% endblocktrans %}
+    </p>
+<hr />
+
+<form id="surveyform" action="{% url 'encuesta:save' %}" onsubmit="return validateForm()" method="post">
+{% csrf_token %}
+
+{% for q in questions %}
+  <div id="{{q.slug}}-container" class="form-group question-container {% if q.hidden %}d-none{% endif %}">
+  <label for="{{q.slug}}" id="{{q.slug}}-label" class="question">{{q.text}}{% if q.required %}<span class="text-danger">*</span>{% endif %}</label>
+  {% if q.type == "text" or q.type == "number" %}
+    <input name="{{q.slug}}" type="{{q.type}}" id="{{q.slug}}" class="form-control" style="width: auto;" 
+      {% if q.minvalue or q.minvalue == 0 %}min={{q.minvalue}} {% endif %}
+      {% if q.maxvalue %}max={{q.maxvalue}} {% endif %}
+      {% if q.placeholder %}placeholder="{{q.placeholder}}"{% endif %} 
+      {% if q.required %}required{% endif %}
+    >
+    {% if q.helptext %}
+      <small id="{{q.slug}}-help" class="text-muted font-italic">{{q.helptext}}</small>
+    {% endif %}
+  {% elif q.type == "select" %}
+    <select name="{{q.slug}}" id="{{q.slug}}" class="form-control" style="width: auto;"
+      {% if q.required %}required{% endif %}
+    >
+      <option value=""></option>
+    {% for choice in q.choice_set.all %}
+      <option value="{{choice.key}}">{{choice.text}}</option>
+    {% endfor %}
+    </select>
+    {% if q.helptext %}
+      <small id="{{q.slug}}-help" class="text-muted font-italic">{{q.helptext}}</small>
+    {% endif %}
+
+  {% elif q.type == "checkbox" or q.type == "radio" %}
+    {% if q.helptext %}
+      <small id="{{q.slug}}-help" class="text-muted font-italic">{{q.helptext}}</small>
+    {% endif %}
+    <div id="{{q.slug}}-choices">
+    {% for choice in q.choice_set.all %}
+      <div class="form-check">
+        <input name="{{q.slug}}" type="{{q.type}}" class="form-check-input" value="{{choice.key}}" id="{{q.slug}}-{{choice.key}}" 
+        {% if q.type == "radio" and q.required %}required{% endif %}
+        >
+        <label class="form-check-label" for="{{q.slug}}-{{choice.key}}">
+        {{choice.text}}
+        </label>
+      </div>
+    {% endfor %}
+    </div>
+  {% endif %}    
+  </div>
+{% endfor %}
+<input type="submit" value="Enviar respuestas">
+</form>
+
+</section>
+
+{% endblock %}
+
+{% block extrascripts %}
+<script>
+function warnCheckbox(slug) {
+  $("#"+slug+"-help").removeClass("text-muted").addClass("text-danger").addClass("lead");  
+  $("#"+slug+"-label").addClass("text-danger");
+  document.getElementById(slug+"-label").scrollIntoView();
+}
+
+function cleanWarning(slug) {
+  $("#"+slug+"-help").removeClass("text-danger").removeClass("lead");  
+  $("#"+slug+"-label").removeClass("text-danger");
+}
+
+function validateForm() {
+
+  var activityCount = $('input[name=activities]:checked').length;
+// We set a return value to allow the function to carry on and clean up warnings even if form is not valid.
+  var returnValue = true;
+
+  if(activityCount == 0 || activityCount > 3) {
+    warnCheckbox('activities');
+    returnValue = false;
+  } else {
+    cleanWarning('activities');
+  }
+
+  checkedCount = $('input[name=lang]:checked').length;
+  if(checkedCount > 3) {
+    warnCheckbox('lang');
+    returnValue = false;
+  } else {
+    cleanWarning('lang');
+  } 
+
+  checkedCount = $('input[name=front]:checked').length;
+  if(checkedCount > 3) {
+    warnCheckbox('front');
+    returnValue = false;
+  } else {
+    cleanWarning('front');
+  }
+
+  checkedCount = $('input[name=db]:checked').length;
+  if(checkedCount > 3) {
+    warnCheckbox('db');
+    returnValue = false;
+  } else {
+    cleanWarning('db');
+  } 
+
+  return returnValue;
+}
+
+document.getElementById("activities-prog").addEventListener("change", (event) => {
+  if(event.target.checked) {
+      $("#lang-container").removeClass("d-none");
+  }
+  else {
+      $('#lang-container').addClass('d-none');
+      $('input[name=lang]:checked').each( function(index, checkbox) {
+        checkbox.checked = false;
+      });
+  }
+});
+
+document.getElementById('activities-front').addEventListener('change', (event) => {
+  if(event.target.checked) {
+      $('#front-container').removeClass('d-none');
+  }
+  else {
+      $('#front-container').addClass('d-none');
+      $('input[name=front]:checked').each( function(index, checkbox) {
+        checkbox.checked = false;
+      });
+  }
+}); 
+
+document.getElementById('activities-dba').addEventListener('change', (event) => {
+  if(event.target.checked) {
+      $('#db-container').removeClass('d-none');
+  }
+  else {
+      $('#db-container').addClass('d-none');
+      $('input[name=db]:checked').each( function(index, checkbox) {
+        checkbox.checked = false;
+      });
+  }
+}); 
+
+</script>
+{% endblock extrascripts %}

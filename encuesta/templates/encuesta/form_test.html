@@ -1,0 +1,22 @@
+{% extends "encuesta/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="content">
+    <h1>{% trans "Encuesta de salarios" %}</h1>
+    <p class="lead">
+    {% blocktrans %}Tus respuestas son anónimas. Agradecemos que contestes con honestidad para generar 
+    estadísticas veraces que sirvan a todos. 
+    {% endblocktrans %}
+    </p>
+<hr />
+
+
+<form action="{% url 'encuesta:save' %}" method="post">
+{% csrf_token %}
+{{ form }}
+ <input type="submit" value="Submit">
+</form>
+</section>
+
+{% endblock %}    

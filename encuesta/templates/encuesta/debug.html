@@ -1,0 +1,15 @@
+{% extends "encuesta/base.html" %}
+
+{% block content %}
+
+{{ message }}
+
+{{ form.non_field_errors }}
+{% for field in form %}
+  {% if field.errors %}
+    {{ field.label_tag }}
+    {{ field.errors }}
+  {% endif %}  
+{% endfor %}
+
+{% endblock content %}
