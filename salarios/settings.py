@@ -91,7 +91,7 @@ if os.getenv('GAE_APPLICATION', None):
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'HOST': '/cloudsql/sg-survey:us-central1:sgsurveys-mysql',
-            'NAME': os.environ.get('DBNAME', 'salarios_dev'),
+            'NAME': os.environ.get('DBNAME', 'salarios_prod'),
             'USER': os.environ.get('DBUSER', 'dev'),
             'PASSWORD': os.environ.get('DBPASS', 'changeme'),
         }

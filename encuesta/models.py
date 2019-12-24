@@ -52,8 +52,10 @@ class Choice(models.Model):
 
 class AnswerSet(models.Model):
     created = models.DateTimeField(auto_now=True)
+    ip_address = models.CharField(max_length=50, null=True, blank=True)
+    recaptcha_score = models.DecimalField(max_digits=2,decimal_places=1, null=True)
 
 class AnswerItem(models.Model):
     answerset = models.ForeignKey(AnswerSet, on_delete=models.CASCADE)
     slug = models.CharField(max_length=20)
-    answer = models.CharField(max_length=50)
+    answer = models.CharField(max_length=200)

@@ -5,7 +5,7 @@ app_name ='encuesta'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('start', views.start, name='start'),
-    path('privacidad', views.privacy, name='privacy'),
-    path('save', views.save, name='save')
+    path('encuesta/start', views.start, name='start'),
+    path('encuesta/privacidad', views.privacy, name='privacy'),
+    path('encuesta/save', views.save, name='save')
 ]

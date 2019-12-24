@@ -6,7 +6,12 @@
     <h1>{% trans "Encuesta de salarios" %}</h1>
     <p class="lead">
     {% blocktrans %}Tus respuestas son anónimas. Agradecemos que contestes con honestidad para generar 
-    estadísticas veraces que sirvan a todos. 
+    estadísticas veraces que sirvan a todos.
+    {% endblocktrans %}
+    </p>
+    <p class="lead">
+    {% blocktrans %}Si encuentras algún error o tienes alguna retroalimentación respecto a esta encuesta 
+    te agradeceremos nos contactes utilizando el enlace correspondiente en el menú.
     {% endblocktrans %}
     </p>
 <hr />
@@ -116,6 +121,22 @@ function validateForm() {
     cleanWarning('db');
   } 
 
+  checkedCount = $('input[name=datascience]:checked').length;
+  if(checkedCount > 3) {
+    warnCheckbox('datascience');
+    returnValue = false;
+  } else {
+    cleanWarning('datascience');
+  } 
+
+  checkedCount = $('input[name=infrastructure]:checked').length;
+  if(checkedCount > 3) {
+    warnCheckbox('infrastructure');
+    returnValue = false;
+  } else {
+    cleanWarning('infrastructure');
+  } 
+
   return returnValue;
 }
 
@@ -154,6 +175,62 @@ document.getElementById('activities-dba').addEventListener('change', (event) => 
       });
   }
 }); 
+
+document.getElementById('activities-dsc').addEventListener('change', (event) => {
+  if(event.target.checked) {
+      $('#datascience-container').removeClass('d-none');
+  }
+  else {
+      $('#datascience-container').addClass('d-none');
+      $('input[name=datascience]:checked').each( function(index, checkbox) {
+        checkbox.checked = false;
+      });
+  }
+}); 
+
+document.getElementById('activities-devops').addEventListener('change', (event) => {
+  if(event.target.checked) {
+      $('#infrastructure-container').removeClass('d-none');
+  }
+  else {
+      $('#infrastructure-container').addClass('d-none');
+      $('input[name=infrastructure]:checked').each( function(index, checkbox) {
+        checkbox.checked = false;
+      });
+  }
+}); 
+
+document.getElementById("activities-prog").addEventListener("change", (event) => {
+  if(event.target.checked) {
+      $("#lang-container").removeClass("d-none");
+  }
+  else {
+      $('#lang-container').addClass('d-none');
+      $('input[name=lang]:checked').each( function(index, checkbox) {
+        checkbox.checked = false;
+      });
+  }
+});
+
+document.getElementById("country").addEventListener("change", (event) => {
+  if(event.target.value == "mx") {
+      $("#salarymx-container").removeClass("d-none");
+      $("#salarymx").attr('required', '');
+      $("#salaryusd-container").addClass("d-none");
+      $("#salaryusd").removeAttr('required');
+      $("#extramx-container").removeClass("d-none");
+      $("#extrausd-container").addClass("d-none");
+  }
+  else {
+      $("#salaryusd-container").removeClass("d-none");
+      $("#salaryusd").attr('required', '');
+      $("#salarymx-container").addClass("d-none");
+      $("#salarymx").removeAttr('required');
+      $("#extrausd-container").removeClass("d-none");
+      $("#extramx-container").addClass("d-none");
+  }
+});
+
 
 </script>
 {% endblock extrascripts %}

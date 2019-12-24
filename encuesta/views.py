@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Question, AnswerSet, AnswerItem
 import logging
+from ipware import get_client_ip
 
 logger = logging.getLogger('django')
 
@@ -20,6 +21,9 @@ def privacy(request):
 def save(request):
     if request.method == 'POST':
         answerSet = AnswerSet()
+        client_ip, is_routable = get_client_ip(request)
+        if isinstance(client_ip, str):
+            answerSet.ip_address = client_ip
         answerSet.save()
         logger.info(f"Created answerset: {answerSet.id}")
         for key, values in request.POST.lists():
