@@ -1,6 +1,10 @@
 {% extends "encuesta/base.html" %}
 {% load i18n %}
 
+{% block extrahead %}
+<script src='https://www.google.com/recaptcha/api.js?render={{RECAPTCHA_KEY}}'></script>
+{% endblock extrahead %}
+
 {% block content %}
 <section class="content">
     <h1>{% trans "Encuesta de salarios" %}</h1>
@@ -72,6 +76,19 @@
 {% endblock %}
 
 {% block extrascripts %}
+<script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('{{RECAPTCHA_KEY}}', {action: 'answer'})
+        .then(function(token) {
+          var captcha_token = document.createElement('input');
+          captcha_token.type = "hidden";
+          captcha_token.name = "g-recaptcha-response";
+          captcha_token.value = token;
+          document.getElementById("surveyform").appendChild(captcha_token);          
+        });
+    });
+</script>
+
 <script>
 function warnCheckbox(slug) {
   $("#"+slug+"-help").removeClass("text-muted").addClass("text-danger").addClass("lead");  

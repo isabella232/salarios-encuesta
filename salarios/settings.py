@@ -19,10 +19,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'MakeYourMoneyInTheJukeboxBaby')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'ThisIsNotSafe')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', True)
+DEBUG = os.environ.get('DEBUG', False)
 
 # SECURITY WARNING: App Engine's security features ensure that it is safe to
 # have ALLOWED_HOSTS = ['*'] when the app is deployed. If you deploy a Django
@@ -90,8 +90,8 @@ if os.getenv('GAE_APPLICATION', None):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/sg-survey:us-central1:sgsurveys-mysql',
-            'NAME': os.environ.get('DBNAME', 'salarios_prod'),
+            'HOST': os.environ.get('DBHOST'),
+            'NAME': os.environ.get('DBNAME', 'salarios_dev'),
             'USER': os.environ.get('DBUSER', 'dev'),
             'PASSWORD': os.environ.get('DBPASS', 'changeme'),
         }
@@ -171,3 +171,6 @@ LOGGING = {
         },
     },
 }
+
+RECAPTCHA_KEY = os.getenv('RECAPTCHA_KEY','recaptcha_key')
+RECAPTCHA_SECRET = os.getenv('RECAPTCHA_SECRET','recaptcha_secret')
