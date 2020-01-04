@@ -1,0 +1,31 @@
+{% extends "encuesta/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Encuesta de Salarios SG" %}{% endblock %}
+
+{% block content %}
+  <section class="content">
+    <h1>{% trans "Encuesta de salarios SG: Resultados previos" %}</h1>
+    <p>
+    {% blocktrans %}Aquí puedes ver algunas estadísticas básicas en base a las respuestas obtenidas
+    hasta el momento. Estos datos todavía no están auditados. Los resultados auditados se publicarán
+    en un reporte a finales de enero de 2020.
+    {% endblocktrans %}
+    </p>
+
+    {{ div | safe }}
+
+    <p class="lead">
+    {% blocktrans %}Si encuentras algún error o tienes alguna retroalimentación respecto a esta encuesta 
+    te agradeceremos nos contactes utilizando el enlace correspondiente en el menú.
+    {% endblocktrans %}
+    </p>
+  </section>
+{% endblock %}
+
+{% block extrascripts %}
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-1.4.0.min.js"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-1.4.0.min.js"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-1.4.0.min.js"></script>
+    {{ script | safe }}
+{% endblock %}

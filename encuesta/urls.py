@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from . import views, views_stats
 
 app_name ='encuesta'
 
@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('encuesta/start', views.start, name='start'),
     path('encuesta/privacidad', views.privacy, name='privacy'),
-    path('encuesta/save', views.save, name='save')
+    path('encuesta/save', views.save, name='save'),
+    path('stats/salariomx', views_stats.salariomx, name='stats_salariomx')
 ]

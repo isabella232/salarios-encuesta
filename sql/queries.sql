@@ -11,19 +11,21 @@ SELECT s.id, s.created,
   ( SELECT cast(answer as signed) FROM encuesta_answeritem i 
     WHERE answerset_id = s.id AND i.slug = 'variation') AS variation,
   ( SELECT cast(answer as signed) FROM encuesta_answeritem i
-    WHERE answerset_id = s.id AND i.slug = 'english') AS english_num,   
+    WHERE answerset_id = s.id AND i.slug = 'english') AS english_num,
   ( SELECT c.text FROM encuesta_answeritem i, encuesta_choice c
     WHERE answerset_id = s.id AND i.answer = c.`key` AND i.slug = 'english') AS english_label,   
+  ( SELECT cast(answer as signed) FROM encuesta_answeritem i
+    WHERE answerset_id = s.id AND i.slug = 'age') AS age,
+  ( SELECT cast(answer as signed) FROM encuesta_answeritem i
+    WHERE answerset_id = s.id AND i.slug = 'experience') AS experience,
+  ( SELECT cast(answer as signed) FROM encuesta_answeritem i
+    WHERE answerset_id = s.id AND i.slug = 'seniority') AS seniority,
   ( SELECT c.text FROM encuesta_answeritem i, encuesta_choice c
     WHERE answerset_id = s.id AND i.answer = c.`key` AND i.slug = 'country') AS country,   
   ( SELECT answer FROM encuesta_answeritem i
     WHERE answerset_id = s.id AND i.slug = 'city') AS city,
   ( SELECT answer FROM encuesta_answeritem i
     WHERE answerset_id = s.id AND i.slug = 'profile') AS profile,
-  ( SELECT answer FROM encuesta_answeritem i
-    WHERE answerset_id = s.id AND i.slug = 'age') AS age,
-  ( SELECT answer FROM encuesta_answeritem i
-    WHERE answerset_id = s.id AND i.slug = 'experience') AS experience,
   ( SELECT answer FROM encuesta_answeritem i
     WHERE answerset_id = s.id AND i.slug = 'edutype') AS edutype,
   ( SELECT answer FROM encuesta_answeritem i
@@ -32,8 +34,6 @@ SELECT s.id, s.created,
     WHERE answerset_id = s.id AND i.slug = 'emptype') AS emptype,
   ( SELECT answer FROM encuesta_answeritem i
     WHERE answerset_id = s.id AND i.slug = 'remote') AS remote,
-  ( SELECT answer FROM encuesta_answeritem i
-    WHERE answerset_id = s.id AND i.slug = 'seniority') AS seniority,
   ( SELECT answer FROM encuesta_answeritem i
     WHERE answerset_id = s.id AND i.slug = 'gender') AS gender,
   ( SELECT answer FROM encuesta_answeritem i
@@ -445,3 +445,30 @@ SELECT s.id, s.created,
     i.slug = 'benefits' AND answer LIKE '%vouchers%' ) AS ben_vouchers
 FROM encuesta_answerset s
 ORDER by s.id;
+
+create or replace view view_langs as 
+SELECT 'Bash scripting' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_bash = 'Y' UNION 
+SELECT 'C#' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_csharp = 'Y' UNION 
+SELECT 'C/C++' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_c = 'Y' UNION 
+SELECT 'COBOL' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_cobol = 'Y' UNION 
+SELECT 'Dart' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_dart = 'Y' UNION 
+SELECT 'Delphi / Object Pascal' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_delphi = 'Y' UNION 
+SELECT 'Elixir' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_elixir = 'Y' UNION 
+SELECT 'Ensamblador' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_assm = 'Y' UNION 
+SELECT 'Go' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_go = 'Y' UNION 
+SELECT 'Groovy' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_groovy = 'Y' UNION 
+SELECT 'Java' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_java = 'Y' UNION 
+SELECT 'JavaScript' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_js = 'Y' UNION 
+SELECT 'Kotlin' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_kotlin = 'Y' UNION 
+SELECT 'Objective C' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_objc = 'Y' UNION 
+SELECT 'Perl' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_perl = 'Y' UNION 
+SELECT 'PHP' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_php = 'Y' UNION 
+SELECT 'PL/SQL' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_plsql = 'Y' UNION 
+SELECT 'Python' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_python = 'Y' UNION 
+SELECT 'R' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_r = 'Y' UNION 
+SELECT 'Ruby' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_ruby = 'Y' UNION 
+SELECT 'Rust' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_rust = 'Y' UNION 
+SELECT 'Scala' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_scala = 'Y' UNION 
+SELECT 'Swift' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_swift = 'Y' UNION 
+SELECT 'VB .NET' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from answers_view v where lang_vbnet = 'Y'
+;
