@@ -3,10 +3,9 @@ from django.shortcuts import render
 import logging
 import pandas as pd
 import numpy as np
-from bokeh.plotting import figure, output_file, show
+from bokeh.plotting import figure 
 from bokeh.embed import components
-from bokeh.models import NumeralTickFormatter
-
+from bokeh.models import NumeralTickFormatter, ColumnDataSource, HoverTool
 
 logger = logging.getLogger('django')
 
@@ -20,21 +19,31 @@ def salariomx(request):
         df = pd.DataFrame(columns=['salarymx'])
         logger.error("Could not get connection to database for stats")
     else:
-        query_text = "SELECT salarymx from answers_view where salarymx > 0"
+        query_text = "SELECT * from answers_view where salarymx > 0"
         df = pd.read_sql(query_text, db_conn)
 
-    salariosmx = df['salarymx']
-    logger.info(salariosmx.describe())
-    hist, edges = np.histogram(salariosmx, bins=12, range=(0,120000))
-    p = figure(plot_height = 400, plot_width = 800, title = "Mexico: Salario bruto mensual (MXN)", x_axis_label = 'Salario', y_axis_label = '# de respuestas', toolbar_location=None)
+    hist, edges = np.histogram(df['salarymx'], bins=24, range=(0,120000))
+
+    hist_df = pd.DataFrame({ 'obs': hist, 'left': edges[:-1], 'right': edges[1:]})
+    hist_df['interval'] = ['%d a %d pesos' % (left, right) for left, right in zip(hist_df['left'], hist_df['right'])]
+    logger.info(f"Keys: {hist_df.head()}")
+
+    src = ColumnDataSource(hist_df)
+    logger.info(f"Keys: {src.data.keys()}")
+
+    p = figure(plot_height = 400, plot_width = 800, title = "Salario de profesionistas de software en México", x_axis_label = 'Salario bruto mensual (MXN)', y_axis_label = '# de observaciones', toolbar_location=None)
     p.xaxis.ticker = list(range(0,121000,10000))
-    p.xaxis.formatter = NumeralTickFormatter(format='$0 a')
-    p.quad(bottom=0, top=hist, left=edges[:-1], right=edges[1:], line_color='#c0c0c0')
+    p.xaxis.formatter = NumeralTickFormatter(format='$0 a')    
+#    p.quad(bottom=0, top=hist, left=edges[:-1], right=edges[1:], line_color='#c0c0c0')
+    p.quad(source=src, bottom=0, top='obs', left='left', right='right', line_color='#c0c0c0')
+    p.add_tools(HoverTool(tooltips=[
+        ('Salario', '@interval'), 
+        ('Observaciones', '@obs')
+    ]))
 
     script, div = components(p)
 
     context = {
-        'count' : salariosmx.count(),
         'script' : script,
         'div' : div
     }

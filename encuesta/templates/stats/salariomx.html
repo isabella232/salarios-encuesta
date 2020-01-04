@@ -6,12 +6,8 @@
 {% block content %}
   <section class="content">
     <h1>{% trans "Encuesta de salarios SG: Resultados previos" %}</h1>
-    <p>
-    {% blocktrans %}Aquí puedes ver algunas estadísticas básicas en base a las respuestas obtenidas
-    hasta el momento. Estos datos todavía no están auditados. Los resultados auditados se publicarán
-    en un reporte a finales de enero de 2020.
-    {% endblocktrans %}
-    </p>
+    <p>{% trans "Aquí puedes ver algunas estadísticas básicas en base a las respuestas obtenidas hasta el momento." %}</p>
+    <p>{% trans "Estos datos todavía no están auditados. Los resultados auditados se publicarán en un reporte a finales de enero de 2020." %}</p>
 
     {{ div | safe }}
 
