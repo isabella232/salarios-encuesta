@@ -6,9 +6,11 @@ import numpy as np
 from bokeh.plotting import figure 
 from bokeh.embed import components
 from bokeh.models import NumeralTickFormatter, ColumnDataSource, HoverTool
+from django.views.decorators.cache import cache_page
 
 logger = logging.getLogger('django')
 
+@cache_page(60 * 15)
 def salariomx(request):
     from django.db import connections
     from django.db.utils import OperationalError
@@ -31,7 +33,7 @@ def salariomx(request):
     src = ColumnDataSource(hist_df)
     logger.info(f"Keys: {src.data.keys()}")
 
-    p = figure(plot_height = 400, plot_width = 800, title = "Salario de profesionistas de software en México", x_axis_label = 'Salario bruto mensual (MXN)', y_axis_label = '# de observaciones', toolbar_location=None)
+    p = figure(plot_height = 400, plot_width = 600, title = "Salario de profesionistas de software en México", x_axis_label = 'Salario bruto mensual (MXN)', y_axis_label = '# de observaciones', toolbar_location=None)
     p.xaxis.ticker = list(range(0,121000,10000))
     p.xaxis.formatter = NumeralTickFormatter(format='$0 a')    
 #    p.quad(bottom=0, top=hist, left=edges[:-1], right=edges[1:], line_color='#c0c0c0')

@@ -11,16 +11,16 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/vnd.microsoft.icon" />
 
-    <meta name="description" content="Encuesta de salarios de profesionistas de software preparada por Software Guru.">
-    <meta property="og:title" content="Encuesta de salarios Software Guru" />
+    <meta name="description" content="{% block metadesc %}Encuesta de salarios de profesionistas de software preparada por Software Guru.{% endblock %}">
+    <meta property="og:title" content="{% block ogtitle %}Encuesta de salarios Software Guru{% endblock %}" />
     <meta property="og:url" content="https://salarios.sg.com.mx" />
-    <meta property="og:description" content="Encuesta de salarios de profesionistas de software preparada por Software Guru." />
-    <meta property="og:image" content="https://salarios.sg.com.mx/static/salarios-card.png" />
+    <meta property="og:description" content="{% block ogdesc %}Encuesta de salarios de profesionistas de software preparada por Software Guru.{% endblock %}" />
+    <meta property="og:image" content="{% block ogimg %}https://salarios.sg.com.mx/static/salarios-card.png{% endblock %}" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Encuesta de salarios Software Guru" />
+    <meta name="twitter:title" content="{% block twtitle %}Encuesta de salarios Software Guru {% endblock %}" />
     <meta name="twitter:url" content="https://salarios.sg.com.mx" />
     <meta name="twitter:site" content="@RevistaSG" />
-    <meta name="twitter:image" content="https://salarios.sg.com.mx/static/salarios-card.png">
+    <meta name="twitter:image" content="{% block twimg %}https://salarios.sg.com.mx/static/salarios-card.png{% endblock %}">
 
     {% block extrahead %}{% endblock %}
 
