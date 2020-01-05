@@ -8,8 +8,7 @@
     <h1 class="jumbotron-heading">{% trans "Bienvenida(o) a la encuesta de Salarios de Software Guru" %}</h1>
     <p class="lead">{% blocktrans %}Esta es una mini aplicación que hemos preparado para que puedas contestar nuestra encuesta de salarios
     y con ello podamos generar un reporte público con estadísticas sobre los salarios de profesionistas de software en nuestra región.{% endblocktrans %}</p>
-    <p class="lead">{% blocktrans %}Por el momento solo está habilitado el cuestionario, pero pronto habilitaremos 
-    la capacidad de ver algunas estadísticas en vivo.{% endblocktrans %}</p>
+    <p class="lead">Ya puedes <a href="{% url 'encuesta:stats' %}">ver algunas estadísticas</a> con resultados previos.</p>
 
     <p class="text-center"><a class="btn btn-danger" href="{% url 'encuesta:start' %}" role="button">{% trans "Comenzar encuesta" %}</a>
     </p>

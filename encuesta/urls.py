@@ -8,5 +8,5 @@ urlpatterns = [
     path('encuesta/start', views.start, name='start'),
     path('encuesta/privacidad', views.privacy, name='privacy'),
     path('encuesta/save', views.save, name='save'),
-    path('stats/salariomx', views_stats.salariomx, name='stats_salariomx')
+    path('stats/preview', views_stats.salariomx, name='stats')
 ]

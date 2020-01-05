@@ -11,17 +11,31 @@
 
 {% block content %}
   <section class="content">
-    <h1>{% trans "Encuesta de salarios SG: Resultados previos" %}</h1>
-    <p>{% trans "Aquí puedes ver algunas estadísticas básicas en base a las respuestas obtenidas hasta el momento." %}</p>
-    <p>{% trans "Estos datos todavía no están auditados. Los resultados auditados se publicarán en un reporte a finales de enero de 2020." %}</p>
+    <h1>Encuesta de salarios SG: Resultados previos</h1>
+    <p>Aquí puedes ver algunas estadísticas básicas en base a las respuestas obtenidas hasta el momento.</p>
+    <h3>Consideraciones</h3>
+    <ul>
+      <li>Estos datos son preliminares y todavía no están auditados. Los resultados auditados se publicarán en un reporte a finales de enero de 2020.</li>
+      <li>Solo incluímos estadísticas para países con al menos 300 respuestas. Por el momento, el único país que cubre dicho criterio es México.</li>
+      <li>Los datos con los que se genera esta página se actualizan cada 15 minutos a partir de las respuestas a la encuesta.</li>
+    </ul>
 
+    <hr>
+
+    <div class="p-3">
     {{ div | safe }}
+    </div>
+  
+    <hr>
 
-    <p class="lead">
+    <p>
     {% blocktrans %}Si encuentras algún error o tienes alguna retroalimentación respecto a esta encuesta 
     te agradeceremos nos contactes utilizando el enlace correspondiente en el menú.
     {% endblocktrans %}
     </p>
+    <p>Si todavía no lo has hecho, entonces <a class="btn btn-danger" href="{% url 'encuesta:start' %}" role="button">{% trans "Contesta la encuesta" %}</a>
+    </p>
+
   </section>
 {% endblock %}
 
