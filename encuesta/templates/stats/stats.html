@@ -13,7 +13,7 @@
   <section class="content">
     <h1>Encuesta de salarios SG: Resultados previos</h1>
     <p>Aquí puedes ver algunas estadísticas básicas en base a las respuestas obtenidas hasta el momento.</p>
-    <h3>Consideraciones</h3>
+    <p class="font-weight-bold">Consideraciones</p>
     <ul>
       <li>Estos datos son preliminares y todavía no están auditados. Los resultados auditados se publicarán en un reporte a finales de enero de 2020.</li>
       <li>Solo incluímos estadísticas para países con al menos 300 respuestas. Por el momento, el único país que cubre dicho criterio es México.</li>
@@ -22,8 +22,10 @@
 
     <hr>
 
-    <div class="p-3">
-    {{ div | safe }}
+    <div class="plots p-3">
+    {% for div in divs %}
+      {{ div | safe }}
+    {% endfor %}
     </div>
   
     <hr>
