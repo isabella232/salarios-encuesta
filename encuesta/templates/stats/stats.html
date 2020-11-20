@@ -11,20 +11,20 @@
 
 {% block content %}
   <section class="content">
-    <h1>Encuesta de salarios SG: Resultados previos</h1>
-    <p>Aquí puedes ver algunas estadísticas básicas en base a las respuestas obtenidas hasta el momento.</p>
+    <h1>Encuesta de salarios SG: Resultados Diciembre 2019</h1>
+    <p>Aquí puedes ver algunas estadísticas sencillas en base a las respuestas de 2019.</p>
     <p class="font-weight-bold">Consideraciones</p>
     <ul>
-      <li>Estos datos son preliminares y todavía no están auditados. Los resultados auditados se publicarán en un reporte a finales de enero de 2020.</li>
-      <li>Solo incluímos estadísticas para países con al menos 300 respuestas. Por el momento, el único país que cubre dicho criterio es México.</li>
-      <li>Los datos con los que se genera esta página se actualizan cada 15 minutos a partir de las respuestas a la encuesta.</li>
+      <li>Próximamente habilitaremos estadísticas en base a respuestas recibidas a finales de 2020.</li>
     </ul>
 
     <hr>
-
+    <h3>México</h3>
     <div class="plots p-3">
     {% for div in divs %}
+      <div class="mb-3 col-12 col-md-8 col-lg-7">
       {{ div | safe }}
+      </div>
     {% endfor %}
     </div>
   
