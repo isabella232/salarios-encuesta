@@ -1,0 +1,25 @@
+create or replace view view_langs as 
+SELECT 'Bash scripting' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_bash = 'Y' UNION 
+SELECT 'C#' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_csharp = 'Y' UNION 
+SELECT 'C/C++' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_clang = 'Y' UNION 
+SELECT 'COBOL' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_cobol = 'Y' UNION 
+SELECT 'Dart' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_dart = 'Y' UNION 
+SELECT 'Delphi / Object Pascal' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_delphi = 'Y' UNION 
+SELECT 'Elixir' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_elixir = 'Y' UNION 
+SELECT 'Ensamblador' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_assm = 'Y' UNION 
+SELECT 'Go' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_go = 'Y' UNION 
+SELECT 'Groovy' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_groovy = 'Y' UNION 
+SELECT 'Java' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_java = 'Y' UNION 
+SELECT 'JavaScript' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_js = 'Y' UNION 
+SELECT 'Kotlin' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_kotlin = 'Y' UNION 
+SELECT 'Objective C' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_objc = 'Y' UNION 
+SELECT 'Perl' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_perl = 'Y' UNION 
+SELECT 'PHP' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_php = 'Y' UNION 
+SELECT 'PL/SQL' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_plsql = 'Y' UNION 
+SELECT 'Python' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_python = 'Y' UNION 
+SELECT 'R' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_rlang = 'Y' UNION 
+SELECT 'Ruby' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_ruby = 'Y' UNION 
+SELECT 'Rust' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_rust = 'Y' UNION 
+SELECT 'Scala' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_scala = 'Y' UNION 
+SELECT 'Swift' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_swift = 'Y' UNION 
+SELECT 'VB .NET' as lang, count(*) as n, round(avg(salarymx)) as salario_mensual_pesos from encuesta_flat_answers v where lang_vbnet = 'Y';

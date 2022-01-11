@@ -79,6 +79,3 @@ venv.bak/
 
 .vscode/
 
-# Google App Engine
-# Putting secrets as env variables in app.yaml so we don't want it to be in repos.
-app.yaml
