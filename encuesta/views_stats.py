@@ -46,6 +46,7 @@ def exp_plot(df,country="mx"):
 
     exp = df.groupby('exp_bin')[column].agg(['count', 'median'])
     exp = exp.reset_index()
+    logger.info(exp.head())
 
     exp_labels = ['0-2', '3-4', '5-6', '7-8', '9-10', '11-14', '15-20', '20+']
     exp['exp_bin'] = exp_labels
@@ -123,7 +124,7 @@ def city_table(df):
     cities = cities.reset_index()
     cities.columns = cities.columns.map('_'.join)
 
-    cities = cities[(cities["salarymx_count"]> 10)]
+    cities = cities[(cities["salarymx_count"]> 5)]
     cities = cities[(cities["salarymx_median"]> 0)]
     cities = cities.sort_values(by=['salarymx_median'], ascending=False)
     src = ColumnDataSource(cities)
@@ -219,6 +220,7 @@ def salariomx(request):
     else:
         query_text = "SELECT * from answers_view WHERE salarymx > 0"
         df = pd.read_sql(query_text, db_conn)
+        logger.info(df.head())
 
     plots = []
 
@@ -226,7 +228,7 @@ def salariomx(request):
     plots.append(english_plot(df))
     plots.append(gender_plot(df))
     plots.append(city_table(df))
-    plots.append(lang_plot(df))
+#    plots.append(lang_plot(df))
 
     script, divs = components(plots)
 

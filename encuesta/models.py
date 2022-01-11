@@ -16,7 +16,8 @@ class Question(models.Model):
     class Sections(models.IntegerChoices):
         PROFILE = 1,
         SKILLS = 2,
-        WAGES = 3
+        WAGES = 3,
+        OTHER = 4
 
     slug = models.SlugField(unique=True, default=uuid.uuid4)
     text = models.CharField(max_length=200)
@@ -43,6 +44,7 @@ class Choice(models.Model):
     key = models.CharField(max_length=16)
     text = models.CharField(max_length=200)
     order = models.IntegerField(default=0)
+    active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['order', 'text']

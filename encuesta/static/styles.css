@@ -206,9 +206,9 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 @media screen and (min-width: 992px) {
-  #activities-choices, #lang-choices, #db-choices, 
-  #front-choices, #datascience-choices, 
-  #infrastructure-choices, #certification-choices, #benefits-choices {
+  #activities-choices, #prog-choices, #dba-choices, 
+  #front-choices, #mobile-choices, #datascience-choices, #dataeng-choices, 
+  #infra-choices, #certification-choices, #benefits-choices {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 1.5em;
@@ -217,9 +217,9 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 @media screen and (min-width: 576px) and (max-width: 991px) {
-  #activities-choices, #lang-choices, #db-choices, 
-  #front-choices, #datascience-choices, 
-  #infrastructure-choices, #certification-choices, #benefits-choices {
+  #activities-choices, #prog-choices, #dba-choices, 
+  #front-choices, #mobile-choices, #datascience-choices, #dataeng-choices, 
+  #infra-choices, #certification-choices, #benefits-choices {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 1.2em;

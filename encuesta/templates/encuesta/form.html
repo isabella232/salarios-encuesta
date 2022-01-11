@@ -42,7 +42,9 @@
     >
       <option value=""></option>
     {% for choice in q.choice_set.all %}
+      {% if choice.active %}
       <option value="{{choice.key}}">{{choice.text}}</option>
+      {% endif %}
     {% endfor %}
     </select>
     {% if q.helptext %}
@@ -53,8 +55,9 @@
     {% if q.helptext %}
       <small id="{{q.slug}}-help" class="text-muted font-italic">{{q.helptext}}</small>
     {% endif %}
-    <div id="{{q.slug}}-choices">
+    <div id="{{q.slug}}-choices" class="col-choices">
     {% for choice in q.choice_set.all %}
+      {% if choice.active %}
       <div class="form-check">
         <input name="{{q.slug}}" type="{{q.type}}" class="form-check-input" value="{{choice.key}}" id="{{q.slug}}-{{choice.key}}" 
         {% if q.type == "radio" and q.required %}required{% endif %}
@@ -63,6 +66,7 @@
         {{choice.text}}
         </label>
       </div>
+      {% endif %}
     {% endfor %}
     </div>
   {% endif %}    
@@ -101,133 +105,32 @@ function cleanWarning(slug) {
   $("#"+slug+"-label").removeClass("text-danger");
 }
 
-function validateForm() {
-
-  var activityCount = $('input[name=activities]:checked').length;
-// We set a return value to allow the function to carry on and clean up warnings even if form is not valid.
-  var returnValue = true;
-
-  if(activityCount == 0 || activityCount > 3) {
-    warnCheckbox('activities');
-    returnValue = false;
-  } else {
-    cleanWarning('activities');
-  }
-
-  checkedCount = $('input[name=lang]:checked').length;
+function checkMaxOptions(slug) {
+  checkedCount = $("input[name="+slug+"]:checked").length;
   if(checkedCount > 3) {
-    warnCheckbox('lang');
+    warnCheckbox(slug);
     returnValue = false;
   } else {
-    cleanWarning('lang');
+    cleanWarning(slug);
   } 
-
-  checkedCount = $('input[name=front]:checked').length;
-  if(checkedCount > 3) {
-    warnCheckbox('front');
-    returnValue = false;
-  } else {
-    cleanWarning('front');
-  }
-
-  checkedCount = $('input[name=db]:checked').length;
-  if(checkedCount > 3) {
-    warnCheckbox('db');
-    returnValue = false;
-  } else {
-    cleanWarning('db');
-  } 
-
-  checkedCount = $('input[name=datascience]:checked').length;
-  if(checkedCount > 3) {
-    warnCheckbox('datascience');
-    returnValue = false;
-  } else {
-    cleanWarning('datascience');
-  } 
-
-  checkedCount = $('input[name=infrastructure]:checked').length;
-  if(checkedCount > 3) {
-    warnCheckbox('infrastructure');
-    returnValue = false;
-  } else {
-    cleanWarning('infrastructure');
-  } 
-
-  return returnValue;
 }
 
-document.getElementById("activities-prog").addEventListener("change", (event) => {
-  if(event.target.checked) {
-      $("#lang-container").removeClass("d-none");
-  }
-  else {
-      $('#lang-container').addClass('d-none');
-      $('input[name=lang]:checked').each( function(index, checkbox) {
+function addHiddenOptions(slug) {
+  document.getElementById('activities-'+slug).addEventListener('change', (event) => {
+    if(event.target.checked) {
+      $('#'+slug+'-container').removeClass('d-none');
+    }
+    else {
+      $('#'+slug+'-container').addClass('d-none');
+      $('input[name='+slug+']:checked').each( function(index, checkbox) {
         checkbox.checked = false;
       });
-  }
-});
+    }
+  }); 
+}  
 
-document.getElementById('activities-front').addEventListener('change', (event) => {
-  if(event.target.checked) {
-      $('#front-container').removeClass('d-none');
-  }
-  else {
-      $('#front-container').addClass('d-none');
-      $('input[name=front]:checked').each( function(index, checkbox) {
-        checkbox.checked = false;
-      });
-  }
-}); 
-
-document.getElementById('activities-dba').addEventListener('change', (event) => {
-  if(event.target.checked) {
-      $('#db-container').removeClass('d-none');
-  }
-  else {
-      $('#db-container').addClass('d-none');
-      $('input[name=db]:checked').each( function(index, checkbox) {
-        checkbox.checked = false;
-      });
-  }
-}); 
-
-document.getElementById('activities-dsc').addEventListener('change', (event) => {
-  if(event.target.checked) {
-      $('#datascience-container').removeClass('d-none');
-  }
-  else {
-      $('#datascience-container').addClass('d-none');
-      $('input[name=datascience]:checked').each( function(index, checkbox) {
-        checkbox.checked = false;
-      });
-  }
-}); 
-
-document.getElementById('activities-devops').addEventListener('change', (event) => {
-  if(event.target.checked) {
-      $('#infrastructure-container').removeClass('d-none');
-  }
-  else {
-      $('#infrastructure-container').addClass('d-none');
-      $('input[name=infrastructure]:checked').each( function(index, checkbox) {
-        checkbox.checked = false;
-      });
-  }
-}); 
-
-document.getElementById("activities-prog").addEventListener("change", (event) => {
-  if(event.target.checked) {
-      $("#lang-container").removeClass("d-none");
-  }
-  else {
-      $('#lang-container').addClass('d-none');
-      $('input[name=lang]:checked').each( function(index, checkbox) {
-        checkbox.checked = false;
-      });
-  }
-});
+extraOptions = ['prog', 'front', 'dba', 'mobile', 'datascience', 'dataeng', 'infra'];
+extraOptions.forEach(slug => addHiddenOptions(slug));
 
 document.getElementById("country").addEventListener("change", (event) => {
   if(event.target.value == "mx") {
@@ -247,6 +150,25 @@ document.getElementById("country").addEventListener("change", (event) => {
       $("#extramx-container").addClass("d-none");
   }
 });
+
+function validateForm() {
+
+var activityCount = $('input[name=activities]:checked').length;
+// We set a return value to allow the function to carry on and clean up warnings even if form is not valid.
+var returnValue = true;
+
+if(activityCount == 0 || activityCount > 3) {
+  warnCheckbox('activities');
+  returnValue = false;
+} else {
+  cleanWarning('activities');
+}
+
+extraOptions = ['prog', 'front', 'dba', 'mobile', 'datascience', 'dataeng', 'infra'];
+extraOptions.forEach(slug => checkMaxOptions(slug));
+
+return returnValue;
+}
 
 
 </script>
