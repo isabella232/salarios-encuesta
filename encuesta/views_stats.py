@@ -174,15 +174,17 @@ def lang_plot(df,country="mx"):
     column = get_salary_column(country)
 
     lang_list = []
-    langs = Choice.objects.filter(question__id=14)
+    langs = Choice.objects.filter(question__id=14,active=True)
     for lang in langs:
         lang_key = "lang_"+lang.key
         lang_list.append([lang.text, df[(df[lang_key]=="Y")][column].count(), df[(df[lang_key]=="Y")][column].median()])
     lang_df = pd.DataFrame(lang_list, columns = ['lenguaje', 'count', 'salario'])
-    lang_df['popularidad'] = np.sqrt(lang_df['count']/2)*2
+    lang_df.drop(lang_df[lang_df['count'] < 5].index, inplace=True)
+    lang_df['popularidad'] = np.log(lang_df['count'])
+    logger.info(lang_df.head())
 
     src = ColumnDataSource(lang_df)
-    p = figure(plot_height = 400, plot_width = 600, sizing_mode="scale_both", toolbar_location=None)
+    p = figure(plot_height = 400, plot_width = 600, sizing_mode="scale_both")
     p.toolbar.active_drag = None
     p.toolbar.active_scroll = None
     p.circle(source=src, y='popularidad', x='salario', line_color=None, fill_color=None, size=20)
@@ -191,7 +193,7 @@ def lang_plot(df,country="mx"):
     p.yaxis.major_label_text_font_size = '0pt'
     p.xaxis.axis_label = 'Salario bruto mensual (MXN)'
     p.xaxis.formatter = NumeralTickFormatter(format='$0 a')    
-    p.x_range = Range1d(16000, 58000)
+    p.x_range = Range1d(15000, 90000)
 
     labels = LabelSet(source=src, x='salario', y='popularidad', text='lenguaje', level='glyph',
               x_offset=-10, y_offset=-5, render_mode='canvas', text_font_size='9pt', text_color='#1f77b4')
@@ -228,7 +230,7 @@ def salariomx(request):
     plots.append(english_plot(df))
     plots.append(gender_plot(df))
     plots.append(city_table(df))
-#    plots.append(lang_plot(df))
+    plots.append(lang_plot(df))
 
     script, divs = components(plots)
 

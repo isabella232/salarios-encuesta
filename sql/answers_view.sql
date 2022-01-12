@@ -64,6 +64,18 @@ SELECT s.id, s.created, s.recaptcha_score,
     i.slug = 'activities' AND answer LIKE '%cons%' ) AS act_cons,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
+    i.slug = 'activities' AND answer LIKE '%prog%' ) AS act_prog,
+  ( SELECT 'Y' FROM encuesta_answeritem i
+    WHERE i.answerset_id = s.id AND  
+    i.slug = 'activities' AND answer LIKE '%mobile%' ) AS act_mobile,
+  ( SELECT 'Y' FROM encuesta_answeritem i
+    WHERE i.answerset_id = s.id AND  
+    i.slug = 'activities' AND answer LIKE '%front%' ) AS act_front,
+  ( SELECT 'Y' FROM encuesta_answeritem i
+    WHERE i.answerset_id = s.id AND  
+    i.slug = 'activities' AND answer LIKE '%devrel%' ) AS act_devrel,
+  ( SELECT 'Y' FROM encuesta_answeritem i
+    WHERE i.answerset_id = s.id AND  
     i.slug = 'activities' AND answer LIKE '%dir%' ) AS act_dir,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
@@ -85,22 +97,10 @@ SELECT s.id, s.created, s.recaptcha_score,
     i.slug = 'activities' AND answer LIKE '%techsales%' ) AS act_techsales,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
-    i.slug = 'activities' AND answer LIKE '%prog%' ) AS act_prog,
-  ( SELECT 'Y' FROM encuesta_answeritem i
-    WHERE i.answerset_id = s.id AND  
-    i.slug = 'activities' AND answer LIKE '%front%' ) AS act_front,
-  ( SELECT 'Y' FROM encuesta_answeritem i
-    WHERE i.answerset_id = s.id AND  
-    i.slug = 'activities' AND answer LIKE '%mobile%' ) AS act_mobile,
-  ( SELECT 'Y' FROM encuesta_answeritem i
-    WHERE i.answerset_id = s.id AND  
-    i.slug = 'activities' AND answer LIKE '%devrel%' ) AS act_devrel,
+    i.slug = 'activities' AND answer LIKE '%pm%' ) AS act_pm,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
     i.slug = 'activities' AND answer LIKE '%iot%' ) AS act_iot,
-  ( SELECT 'Y' FROM encuesta_answeritem i
-    WHERE i.answerset_id = s.id AND  
-    i.slug = 'activities' AND answer LIKE '%pm%' ) AS act_pm,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
     i.slug = 'activities' AND answer LIKE '%infosec%' ) AS act_infosec,
@@ -130,16 +130,10 @@ SELECT s.id, s.created, s.recaptcha_score,
     i.slug = 'prog' AND answer LIKE '%cobol%' ) AS lang_cobol,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
-    i.slug = 'prog' AND answer LIKE '%dart%' ) AS lang_dart,
-  ( SELECT 'Y' FROM encuesta_answeritem i
-    WHERE i.answerset_id = s.id AND  
     i.slug = 'prog' AND answer LIKE '%delphi%' ) AS lang_delphi,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
     i.slug = 'prog' AND answer LIKE '%elixir%' ) AS lang_elixir,
-  ( SELECT 'Y' FROM encuesta_answeritem i
-    WHERE i.answerset_id = s.id AND  
-    i.slug = 'prog' AND answer LIKE '%assm%' ) AS lang_assm,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
     i.slug = 'prog' AND answer LIKE '%go%' ) AS lang_go,
@@ -154,13 +148,7 @@ SELECT s.id, s.created, s.recaptcha_score,
     i.slug = 'prog' AND answer LIKE '%js%' ) AS lang_js,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
-    i.slug = 'prog' AND answer LIKE '%julia%' ) AS lang_julia,
-  ( SELECT 'Y' FROM encuesta_answeritem i
-    WHERE i.answerset_id = s.id AND  
     i.slug = 'prog' AND answer LIKE '%kotlin%' ) AS lang_kotlin,
-  ( SELECT 'Y' FROM encuesta_answeritem i
-    WHERE i.answerset_id = s.id AND  
-    i.slug = 'prog' AND answer LIKE '%objc%' ) AS lang_objc,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
     i.slug = 'prog' AND answer LIKE '%perl%' ) AS lang_perl,
@@ -173,9 +161,6 @@ SELECT s.id, s.created, s.recaptcha_score,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
     i.slug = 'prog' AND answer LIKE '%python%' ) AS lang_python,
-  ( SELECT 'Y' FROM encuesta_answeritem i
-    WHERE i.answerset_id = s.id AND  
-    i.slug = 'prog' AND answer LIKE '%rlang%') AS lang_rlang,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
     i.slug = 'prog' AND answer LIKE '%ruby%' ) AS lang_ruby,
