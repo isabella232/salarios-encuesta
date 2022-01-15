@@ -55,7 +55,7 @@ SELECT s.id, s.created, s.recaptcha_score,
     i.slug = 'activities' AND answer LIKE '%cap%' ) AS act_cap,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
-    i.slug = 'activities' AND answer LIKE '%datascience%' ) AS act_dsc,
+    i.slug = 'activities' AND answer LIKE '%datascience%' ) AS act_datascience,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
     i.slug = 'activities' AND answer LIKE '%spi%' ) AS act_spi,
@@ -85,13 +85,13 @@ SELECT s.id, s.created, s.recaptcha_score,
     i.slug = 'activities' AND answer LIKE '%techwrite%' ) AS act_techwrite,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
-    i.slug = 'activities' AND answer LIKE '%infra%' ) AS act_devops,
+    i.slug = 'activities' AND answer LIKE '%infra%' ) AS act_infra,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
     i.slug = 'activities' AND answer LIKE '%erp%' ) AS act_erp,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
-    i.slug = 'activities' AND answer LIKE '%dataeng%' ) AS act_deng,
+    i.slug = 'activities' AND answer LIKE '%dataeng%' ) AS act_dataeng,
   ( SELECT 'Y' FROM encuesta_answeritem i
     WHERE i.answerset_id = s.id AND  
     i.slug = 'activities' AND answer LIKE '%techsales%' ) AS act_techsales,
@@ -454,4 +454,3 @@ SELECT s.id, s.created, s.recaptcha_score,
 FROM encuesta_answerset s
 WHERE s.created > DATE_SUB(NOW(), INTERVAL 1 YEAR)
 ORDER by s.id;
-

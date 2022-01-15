@@ -137,6 +137,38 @@ def city_table(df):
     table = DataTable(source=src,columns=columns,index_position=None, width=420)
     return table
 
+
+def act_table(df):
+    from django.db import connections
+    from django.db.utils import OperationalError
+    db_conn = connections['default']
+    act_list = []
+    try:
+        c = db_conn.cursor()
+    except OperationalError:
+        logger.error("Could not get connection to database for stats")
+    else:
+        c.execute("select concat('act_', c.`key`) as k, c.`text` as v from encuesta_choice c where question_id = 5")
+        result = c.fetchall()
+        c.close()
+        for row in result:
+            k = row[0]
+            v = row[1]
+            act_list.append([v, df[(df[k] == "Y")]["salarymx"].count(), df[(df[k] == "Y")]["salarymx"].median(), df[(df[k] == "Y")]["salarymx"].std()])
+
+    act_df = pd.DataFrame(act_list, columns=['actividad', 'n', 'median', 'std'])	
+    act_df = act_df.sort_values(by=['median'], ascending=False)
+    
+    src = ColumnDataSource(act_df)
+    columns = [
+        TableColumn(field="actividad", title="Actividad", width=350),
+        TableColumn(field="n", title="n", width=50),
+        TableColumn(field="median", title="Salario", width=70, formatter=NumberFormatter(format='$0,0')),
+        TableColumn(field="std", title="Des Std", width=70, formatter=NumberFormatter(format='$0,0')),
+    ]
+    table = DataTable(source=src,columns=columns,index_position=None, height=760, width=540)
+    return table
+
 def gender_plot(df,country="mx"):
     column = get_salary_column(country)
 
@@ -209,7 +241,7 @@ def lang_plot(df,country="mx"):
 
     return p
 
-@cache_page(60 * 15)
+# @cache_page(60 * 15)
 def salariomx(request):
     from django.db import connections
     from django.db.utils import OperationalError
@@ -230,6 +262,7 @@ def salariomx(request):
     plots.append(english_plot(df))
     plots.append(gender_plot(df))
     plots.append(city_table(df))
+    plots.append(act_table(df))
     plots.append(lang_plot(df))
 
     script, divs = components(plots)
