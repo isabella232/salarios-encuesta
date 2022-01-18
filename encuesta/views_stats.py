@@ -241,7 +241,7 @@ def lang_plot(df,country="mx"):
 
     return p
 
-# @cache_page(60 * 15)
+@cache_page(60 * 15)
 def salariomx(request):
     from django.db import connections
     from django.db.utils import OperationalError
@@ -254,6 +254,7 @@ def salariomx(request):
     else:
         query_text = "SELECT * from answers_view WHERE salarymx > 0"
         df = pd.read_sql(query_text, db_conn)
+        c.close()
         logger.info(df.head())
 
     plots = []
